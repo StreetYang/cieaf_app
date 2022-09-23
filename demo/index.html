@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="./cieaf_app.js"></script>
+</head>
+
+<body>
+    <div id="el"></div>
+
+    <script>
+        const { h, createApp } = cieaf_app;
+        
+        function root(app) {
+
+            function add() {
+                app.count++;
+            }
+
+            function s() {
+                return parseInt(Math.random() * 1e3).toString(36);
+            }
+
+            return h`
+                <div class="root">
+                    <p>
+                        basic :
+                        <button @click=${add} >count:${app.count}</button>
+                    </p>
+                    <p>
+                        array : ${app.array.join(',')}
+                        <button @click=${e => app.array[0] = s()} >set0</button>
+                        <button @click=${e => app.array.push(s())} >push</button>
+                    </p>
+                    <p>
+                        object : ${JSON.stringify(app.obj)}
+                        <button @click=${e => app.obj.key = s()} >update</button>
+                        <button @click=${e => app.obj[s()] = s()} >add</button>
+                        <button @click=${e => delete app.obj.key} >del</button>
+                    </p>
+                    <p>
+                        input:
+                        <input .value=${app.value} @input=${e => app.value = e.target.value} />
+                        ${app.value}
+                    </p>
+                    <p>
+                        app function:
+                        <button @click=${app.close}>close</button>
+                    </p>
+                    <p>
+                        more: https://www.npmjs.com/package/lit-html
+                    </p>
+                </div>
+            `;
+        }
+
+        function main(app) {
+            return h`
+                <style></style>
+                ${root(app)}
+            `
+        }
+
+        const app = createApp(el, main, {
+            count: 0,
+            array: ['hello', 'cieaf'],
+            obj: { key: 'hello' },
+            value: 'cieaf',
+            close() {
+                app.$el.remove();
+            }
+        });
+    </script>
+</body>
+
+</html>

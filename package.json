@@ -1,0 +1,21 @@
+{
+  "name": "cieaf_app",
+  "version": "0.1.1",
+  "description": "a reactive element creater",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild index.js --outfile=demo/cieaf_app.js --bundle --minify --format=iife --global-name=cieaf_app --target=es6 --legal-comments=inline"
+  },
+  "author": "Street Yang",
+  "license": "MIT",
+  "dependencies": {
+    "lit-html": "^2.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.15.9"
+  },
+  "files": [
+    "demo",
+    "index.js"
+  ]
+}
