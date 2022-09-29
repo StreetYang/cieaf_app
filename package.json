@@ -1,6 +1,6 @@
 {
   "name": "cieaf_app",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a reactive element creater",
   "main": "index.js",
   "repository": {

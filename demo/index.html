@@ -10,11 +10,11 @@
 
     <script>
         const { h, createApp } = cieaf_app;
-        
-        function root(app) {
+
+        function root(ctx) {
 
             function add() {
-                app.count++;
+                ctx.count++;
             }
 
             function s() {
@@ -25,27 +25,27 @@
                 <div class="root">
                     <p>
                         basic :
-                        <button @click=${add} >count:${app.count}</button>
+                        <button @click=${add} >count:${ctx.count}</button>
                     </p>
                     <p>
-                        array : ${app.array.join(',')}
-                        <button @click=${e => app.array[0] = s()} >set0</button>
-                        <button @click=${e => app.array.push(s())} >push</button>
+                        array : ${ctx.array.join(',')}
+                        <button @click=${e => ctx.array[0] = s()} >set0</button>
+                        <button @click=${e => ctx.array.push(s())} >push</button>
                     </p>
                     <p>
-                        object : ${JSON.stringify(app.obj)}
-                        <button @click=${e => app.obj.key = s()} >update</button>
-                        <button @click=${e => app.obj[s()] = s()} >add</button>
-                        <button @click=${e => delete app.obj.key} >del</button>
+                        object : ${JSON.stringify(ctx.obj)}
+                        <button @click=${e => ctx.obj.key = s()} >update</button>
+                        <button @click=${e => ctx.obj[s()] = s()} >add</button>
+                        <button @click=${e => delete ctx.obj.key} >del</button>
                     </p>
                     <p>
                         input:
-                        <input .value=${app.value} @input=${e => app.value = e.target.value} />
-                        ${app.value}
+                        <input .value=${ctx.value} @input=${e => ctx.value = e.target.value} />
+                        ${ctx.value}
                     </p>
                     <p>
-                        app function:
-                        <button @click=${app.close}>close</button>
+                        ctx function:
+                        <button @click=${ctx.close}>close</button>
                     </p>
                     <p>
                         more: https://www.npmjs.com/package/lit-html
@@ -54,10 +54,10 @@
             `;
         }
 
-        function main(app) {
+        function main(ctx) {
             return h`
                 <style></style>
-                ${root(app)}
+                ${root(ctx)}
             `
         }
 

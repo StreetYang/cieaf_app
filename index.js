@@ -8,10 +8,10 @@ import { html as h, render as r } from 'lit-html'
 
 function createApp(el, main, data) {
 
-    const parent = el.shadowRoot || el;
+    const root = el.shadowRoot || el;
     let changed = false;
 
-    const ctx = new Proxy(data || {}, {
+    const ctx = new Proxy({ ...data }, {
         get(target, attr) {
             if (!changed) {
                 changed = true;
@@ -31,11 +31,13 @@ function createApp(el, main, data) {
     })
 
     function render() {
-        r(h`${main(ctx)}`, parent);
+        r(h`${main(ctx)}`, root);
         changed = false;
     }
 
     ctx.$el = el;
+    ctx.$root = root;
+
     return ctx;
 }
 
