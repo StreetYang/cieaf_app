@@ -9,11 +9,14 @@
     <script>
         const { h, createApp } = cieaf_app;
 
-        function main(ctx) {
+        function render(app) {
+            const { data } = app;
+
             function add() {
-                ctx.count++;
+                data.count++;
             }
-            return h`<a @click=${add}>count:${ctx.count}</a>`
+
+            return h`<a @click=${add}>count:${data.count}</a>`
         }
 
         class MyElement extends HTMLElement {
@@ -21,20 +24,20 @@
 
             constructor() {
                 super();
-                this.attachShadow({ mode: 'open' });
-                this.ctx = createApp(this, main, { count: 0 });
 
-                const css = new CSSStyleSheet();
-                css.replaceSync('a{color:red}');
-                this.shadowRoot.adoptedStyleSheets.push(css);
+                this.app = createApp(this, render, {
+                    shadow: true,
+                    css: 'a{color:red}',
+                    count: 0
+                })
             }
 
-            get count() { return this.ctx.count }
+            get count() { return this.app.data.count }
 
             set count(v) { this.setAttribute('count', v) }
 
             attributeChangedCallback(name, oldValue, newValue) {
-                this.ctx[name] = parseInt(newValue);
+                this.app.data[name] = parseInt(newValue);
             }
         }
 

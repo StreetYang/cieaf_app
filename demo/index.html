@@ -11,10 +11,12 @@
     <script>
         const { h, createApp } = cieaf_app;
 
-        function root(ctx) {
+        function root(app) {
+
+            const { data } = app;
 
             function add() {
-                ctx.count++;
+                data.count++;
             }
 
             function s() {
@@ -25,27 +27,27 @@
                 <div class="root">
                     <p>
                         basic :
-                        <button @click=${add} >count:${ctx.count}</button>
+                        <button @click=${add} >count:${data.count}</button>
                     </p>
                     <p>
-                        array : ${ctx.array.join(',')}
-                        <button @click=${e => ctx.array[0] = s()} >set0</button>
-                        <button @click=${e => ctx.array.push(s())} >push</button>
+                        array : ${data.array.join(',')}
+                        <button @click=${e => data.array[0] = s()} >set0</button>
+                        <button @click=${e => data.array.push(s())} >push</button>
                     </p>
                     <p>
-                        object : ${JSON.stringify(ctx.obj)}
-                        <button @click=${e => ctx.obj.key = s()} >update</button>
-                        <button @click=${e => ctx.obj[s()] = s()} >add</button>
-                        <button @click=${e => delete ctx.obj.key} >del</button>
+                        object : ${JSON.stringify(data.obj)}
+                        <button @click=${e => data.obj.key = s()} >update</button>
+                        <button @click=${e => data.obj[s()] = s()} >add</button>
+                        <button @click=${e => delete data.obj.key} >del</button>
                     </p>
                     <p>
                         input:
-                        <input .value=${ctx.value} @input=${e => ctx.value = e.target.value} />
-                        ${ctx.value}
+                        <input .value=${data.value} @input=${e => data.value = e.target.value} />
+                        ${data.value}
                     </p>
                     <p>
-                        ctx function:
-                        <button @click=${ctx.close}>close</button>
+                        function:
+                        <button @click=${app.close}>close</button>
                     </p>
                     <p>
                         more: https://www.npmjs.com/package/lit-html
@@ -54,20 +56,21 @@
             `;
         }
 
-        function main(ctx) {
+        function render(app) {
             return h`
-                <style></style>
-                ${root(ctx)}
+                ${root(app)}
             `
         }
-
-        const app = createApp(el, main, {
-            count: 0,
-            array: ['hello', 'cieaf'],
-            obj: { key: 'hello' },
-            value: 'cieaf',
+        createApp(el, render, {
+            data: {
+                count: 0,
+                array: ['hello', 'cieaf'],
+                obj: { key: 'hello' },
+                value: 'cieaf',
+            },
+            css: 'button{color:red}',
             close() {
-                app.$el.remove();
+                this.el.remove();
             }
         });
     </script>
