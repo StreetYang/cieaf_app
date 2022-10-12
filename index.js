@@ -101,4 +101,10 @@ function createApp(el, render, opts) {
     return new App(el, render, opts);
 }
 
-export { h, createApp }
+function defineEl(tagName, Component) {
+    if (!customElements.get(tagName)) {
+        customElements.define(tagName, Component);
+    }
+}
+
+export { h, createApp, defineEl }
